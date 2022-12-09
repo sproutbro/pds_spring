@@ -4,8 +4,8 @@
 <mapper namespace="cf.eisp.pds_spring.repository.JoinRepository">
     <insert id="save">
         insert into member
-            (email, password)
+            (username, password, role)
         values
-            (#{email}, #{password})
+            (#{username}, #{password}, #{role})
     </insert>
 </mapper>
