@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### 임시
-application.properties
+application.yml

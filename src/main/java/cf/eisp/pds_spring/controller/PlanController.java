@@ -1,6 +1,7 @@
 package cf.eisp.pds_spring.controller;
 
 import cf.eisp.pds_spring.model.Plan;
+import cf.eisp.pds_spring.repository.JoinRepository;
 import cf.eisp.pds_spring.repository.PlanRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,5 +37,11 @@ public class PlanController {
     @GetMapping("/plan")
     public List<Plan> findAllPlan() {
         return planRepository.findAll();
+    }
+
+    @GetMapping("/test")
+    public String fjdio() {
+        JoinRepository.finddjifojio();
+        return "fdjiosdjiof";
     }
 }
