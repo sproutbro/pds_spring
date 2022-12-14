@@ -1,10 +1,14 @@
 package cf.eisp.pds_spring.controller;
 
+import cf.eisp.pds_spring.config.auth.PrincipalDetails;
 import cf.eisp.pds_spring.model.Role;
 import cf.eisp.pds_spring.model.User;
 import cf.eisp.pds_spring.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +32,13 @@ public class UserController {
         user.setPassword(encPassword);
         System.out.println(user);
         return userRepository.save(user);
+    }
+
+    @GetMapping("/user")
+    public void user(Authentication authentication) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        String username = principalDetails.getUsername();
+
+        System.out.println(username);
     }
 }

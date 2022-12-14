@@ -1,12 +1,14 @@
 package cf.eisp.pds_spring.controller;
 
+import cf.eisp.pds_spring.config.auth.PrincipalDetails;
 import cf.eisp.pds_spring.model.Plan;
+import cf.eisp.pds_spring.model.PlanDo;
+import cf.eisp.pds_spring.model.User;
+import cf.eisp.pds_spring.repository.DoRepository;
 import cf.eisp.pds_spring.repository.PlanRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -18,20 +20,38 @@ import java.util.List;
 public class PlanController {
 
     PlanRepository planRepository;
+    DoRepository doRepository;
     @PostMapping("/plan")
-    public void plan(@RequestBody Plan plan) {
+    public Integer plan(@RequestBody Plan plan, Authentication authentication) {
 
-
-        if(plan.getEndDate() == null){
+        if(plan.getPlanEndDate() == null){
             Calendar instance = Calendar.getInstance();
             instance.add(Calendar.DATE, 1);
             Date date = new Date(instance.getTimeInMillis());
             Timestamp timestamp = new Timestamp(date.getTime());
-            plan.setEndDate(timestamp);
+            plan.setPlanEndDate(timestamp);
         }
-        Integer save = planRepository.save(plan);
-        System.out.println("save = " + save);
+
+        if (authentication != null) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            String username = principalDetails.getUsername();
+            plan.setUsername(username);
+        }
+
+        return planRepository.save(plan);
     }
+
+    @DeleteMapping("/delete")
+    public Integer delete(@RequestBody Plan plan) {
+        Integer planId = plan.getPlanId();
+        return planRepository.delete(planId);
+    }
+
+    @PostMapping("/update")
+    public Integer update(@RequestBody PlanDo planDo) {
+        return doRepository.save(planDo);
+    }
+
 
     @GetMapping("/plan")
     public List<Plan> findAllPlan() {

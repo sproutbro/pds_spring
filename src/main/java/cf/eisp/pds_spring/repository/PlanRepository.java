@@ -10,4 +10,6 @@ public interface PlanRepository {
     Integer save(Plan plan);
 
     List<Plan> findAll();
+
+    Integer delete(Integer planId);
 }

@@ -4,11 +4,31 @@
 <mapper namespace="cf.eisp.pds_spring.repository.PlanRepository">
     <insert id="save">
         insert into plan
-            (title, end_date, privateYN, email, memo)
-        values
-            (#{title}, #{endDate}, #{privateYN}, #{email}, #{memo})
+            (plan_title,
+             plan_memo,
+             plan_reg_date,
+             plan_end_date,
+             username,
+             plan_category,
+             plan_password,
+             plan_private)
+        values (#{planTitle},
+                #{planMemo},
+                now(),
+                #{planEndDate},
+                #{username},
+                #{planCategory},
+                #{planPassword},
+                #{planPrivate})
     </insert>
     <select id="findAll" resultType="Plan">
-        select * from plan
+        select p.* from plan p
+                          left join do d on p.plan_id = d.plan_id
+        where do_id is null and plan_private = 'Y'
     </select>
+    <delete id="delete" parameterType="Integer">
+        delete
+        from plan
+        where plan_id = #{planId}
+    </delete>
 </mapper>
