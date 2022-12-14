@@ -31,4 +31,9 @@
         from plan
         where plan_id = #{planId}
     </delete>
+    <select id="findByUsername" parameterType="String" resultType="Plan">
+        select p.* from plan p
+                            left join do d on p.plan_id = d.plan_id
+        where do_id is null and username = #{username}
+    </select>
 </mapper>

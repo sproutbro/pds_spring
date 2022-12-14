@@ -36,9 +36,13 @@ public class UserController {
 
     @GetMapping("/user")
     public void user(Authentication authentication) {
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        String username = principalDetails.getUsername();
-
+        String username = getUser(authentication);
         System.out.println(username);
+    }
+
+    //유저네임 리턴해주는 함수
+    public static String getUser(Authentication authentication) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        return principalDetails.getUsername();
     }
 }
