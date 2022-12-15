@@ -14,4 +14,6 @@ public interface PlanRepository {
     Integer delete(Integer planId);
 
     List<Plan> findByUsername(String username);
+
+    Plan findByPlanId(Integer planId);
 }

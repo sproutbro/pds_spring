@@ -58,6 +58,12 @@ public class PlanController {
         return planRepository.findAll();
     }
 
+    @GetMapping("/plan/{id}")
+    public Plan findByPlanId(@PathVariable String id) {
+        Integer planId = Integer.valueOf(id);
+        return planRepository.findByPlanId(planId);
+    }
+
     @GetMapping("/test")
     public String fjdio() {
         return "fdjiosdjiof";

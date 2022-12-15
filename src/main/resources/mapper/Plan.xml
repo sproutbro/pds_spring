@@ -22,9 +22,13 @@
                 #{planPrivate})
     </insert>
     <select id="findAll" resultType="Plan">
-        select p.* from plan p
-                          left join do d on p.plan_id = d.plan_id
+        select p.*, r.reply_count from plan p
+                                           left join do d on p.plan_id = d.plan_id
+                                           left join
+                                       (select plan_id, count(plan_id) as reply_count from reply group by plan_id) r
+                                       on p.plan_id = r.plan_id
         where do_id is null and plan_private = 'Y'
+        order by plan_end_date asc
     </select>
     <delete id="delete" parameterType="Integer">
         delete
@@ -35,5 +39,9 @@
         select p.* from plan p
                             left join do d on p.plan_id = d.plan_id
         where do_id is null and username = #{username}
+    </select>
+    <select id="findByPlanId" parameterType="Integer" resultType="Plan">
+        select * from plan
+        where plan_id = #{planId}
     </select>
 </mapper>
