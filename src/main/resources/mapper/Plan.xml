@@ -39,6 +39,7 @@
         select p.* from plan p
                             left join do d on p.plan_id = d.plan_id
         where do_id is null and username = #{username}
+        order by plan_end_date asc
     </select>
     <select id="findByPlanId" parameterType="Integer" resultType="Plan">
         select * from plan
