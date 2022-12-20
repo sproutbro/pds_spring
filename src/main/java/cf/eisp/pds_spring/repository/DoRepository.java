@@ -10,4 +10,10 @@ public interface DoRepository {
     Integer save(PlanDo planDo);
 
     List<PlanDo> findAll();
+
+    PlanDo findById(Integer planId);
+    Integer update(PlanDo planDo);
+    Integer delete(Integer planId);
+
+
 }

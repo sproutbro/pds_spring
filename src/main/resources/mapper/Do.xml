@@ -23,6 +23,6 @@
             plan p left join do d
                 on p.plan_id = d.plan_id
         where do_id is not null
-          and plan_private = 'Y'
+            and plan_private = 'Y'
     </select>
 </mapper>
