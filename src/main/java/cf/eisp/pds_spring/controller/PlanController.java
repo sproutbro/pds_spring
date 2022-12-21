@@ -52,7 +52,6 @@ public class PlanController {
         return doRepository.save(planDo);
     }
 
-
     @GetMapping("/plan")
     public List<Plan> findAllPlan() {
         return planRepository.findAll();
